@@ -1,6 +1,6 @@
-# __NAME__
+# terraform-google-bastion-host
 
-__DESCRIPTION__
+Bastion VM with no external IP, IAP-only SSH, OS Login and shielded VM, for named members
 
 ## Opinions
 
@@ -10,7 +10,7 @@ __DESCRIPTION__
 
 ```hcl
 module "this" {
-  source = "git::https://github.com/Olensys/__NAME__.git?ref=v1.0.0"
+  source = "git::https://github.com/Olensys/terraform-google-bastion-host.git?ref=v1.0.0"
 
   name = "example"
   context = {
