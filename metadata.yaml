@@ -4,7 +4,7 @@ tier: capability          # primitive | capability | blueprint
 maturity: experimental    # experimental | stable | deprecated
 description: Bastion VM with no external IP, IAP-only SSH, OS Login and shielded VM, for named members
 owners: [platform]
-upstream: null            # e.g. "terraform-aws-modules/s3-bucket/aws 5.17.0"
+upstream: "terraform-google-modules/bastion-host/google 9.0.0"
 pairs_with: null          # e.g. "terraform-google-gcs-bucket"
 registry_name: terraform-google-bastion-host
 deprecated: null          # { removal: YYYY-MM-DD, replacement: <repo> }

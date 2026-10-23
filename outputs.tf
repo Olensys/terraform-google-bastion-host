@@ -1,20 +1,34 @@
 output "id" {
-  description = "Identifier of the primary resource. Null when create is false."
-  value       = var.create ? var.name : null
+  description = "Instance ID (projects/<project>/zones/<zone>/instances/<name>). Null when create is false."
+  value       = var.create ? "projects/${var.project_id}/zones/${var.zone}/instances/${var.name}" : null
 }
 
 output "name" {
-  description = "Name of the primary resource. Null when create is false."
-  value       = var.create ? var.name : null
+  description = "Instance host name. Null when create is false."
+  value       = var.create ? module.this[0].hostname : null
 }
 
-# GCP modules replace this output with `self_link`. Replace `null` with the resource's ARN.
-output "arn" {
-  description = "ARN of the primary resource. Null when create is false."
-  value       = null
+output "self_link" {
+  description = "Self link of the bastion instance. Null when create is false."
+  value       = var.create ? module.this[0].self_link : null
 }
 
-output "tags" {
-  description = "Tags applied to every taggable resource, with context.extra_tags merged in. Null when create is false."
-  value       = var.create ? local.tags : null
+output "service_account_email" {
+  description = "Email of the service account the bastion runs as. Null when create is false."
+  value       = var.create ? module.this[0].service_account : null
+}
+
+output "labels" {
+  description = "Labels applied to the bastion, with context.extra_tags merged in. Null when create is false."
+  value       = var.create ? local.labels : null
+}
+
+output "external_ip_enabled" {
+  description = "Whether the bastion has an external IP. Always false; null when create is false."
+  value       = var.create ? false : null
+}
+
+output "members" {
+  description = "IAM members granted IAP tunnel and OS Login access. Null when create is false."
+  value       = var.create ? var.members : null
 }
