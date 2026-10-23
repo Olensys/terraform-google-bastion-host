@@ -13,6 +13,11 @@ output "self_link" {
   value       = var.create ? module.this[0].self_link : null
 }
 
+output "ip_address" {
+  description = "Internal IP address of the bastion. Null when create is false."
+  value       = var.create ? module.this[0].ip_address : null
+}
+
 output "service_account_email" {
   description = "Email of the service account the bastion runs as. Null when create is false."
   value       = var.create ? module.this[0].service_account : null

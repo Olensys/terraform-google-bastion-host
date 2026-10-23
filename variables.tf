@@ -1,9 +1,9 @@
 variable "name" {
-  description = "Resource name. Lowercase letters, digits and hyphens."
+  description = "Instance name. Starts with a lowercase letter; lowercase letters, digits and hyphens; at most 22 characters so the derived service account id (<name>-bastion) stays within 30."
   type        = string
   validation {
-    condition     = can(regex("^[a-z0-9-]{1,63}$", var.name))
-    error_message = "name must match ^[a-z0-9-]{1,63}$."
+    condition     = can(regex("^[a-z]([-a-z0-9]*[a-z0-9])?$", var.name)) && length(var.name) <= 22
+    error_message = "name must start with a letter, end with a letter or digit, use only lowercase letters, digits and hyphens, and be at most 22 characters."
   }
 }
 

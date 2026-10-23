@@ -75,7 +75,7 @@ run "test_create_false_plans_nothing" {
   }
 
   assert {
-    condition     = output.id == null && output.name == null && output.self_link == null && output.service_account_email == null && output.labels == null && output.external_ip_enabled == null && output.members == null
+    condition     = output.id == null && output.name == null && output.self_link == null && output.service_account_email == null && output.labels == null && output.external_ip_enabled == null && output.members == null && output.ip_address == null
     error_message = "Every output must be null when create is false."
   }
 
@@ -135,7 +135,27 @@ run "test_name_length_validation" {
   command = plan
 
   variables {
-    name = "a-name-that-is-far-too-long-for-an-instance-name-limit-of-sixty-three"
+    name = "a-name-that-is-far-too-long-for-the-service-account-id"
+  }
+
+  expect_failures = [var.name]
+}
+
+run "test_name_leading_digit_validation" {
+  command = plan
+
+  variables {
+    name = "1foo"
+  }
+
+  expect_failures = [var.name]
+}
+
+run "test_name_leading_hyphen_validation" {
+  command = plan
+
+  variables {
+    name = "-foo"
   }
 
   expect_failures = [var.name]

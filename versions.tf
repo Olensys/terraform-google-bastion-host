@@ -6,11 +6,11 @@ terraform {
       source  = "hashicorp/google"
       version = ">= 6.0, < 8.0"
     }
-    # The upstream instance template is created with google-beta, which the
-    # upstream module caps below 7.
+    # The upstream instance template submodule (terraform-google-modules/vm
+    # instance_template 13.x) creates the template with google-beta.
     google-beta = {
       source  = "hashicorp/google-beta"
-      version = ">= 6.0, < 7.0"
+      version = ">= 6.0, < 8.0"
     }
     random = {
       source  = "hashicorp/random"

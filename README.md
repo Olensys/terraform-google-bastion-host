@@ -10,7 +10,7 @@ Bastion VM with no external IP, IAP-only SSH, OS Login and shielded VM, for name
 - Shielded VM on, Debian 12 (`debian-12` from `debian-cloud`), 10 GB boot disk, `e2-micro` by default.
 - Service account roles are upstream's defaults (log writer, metric writer, monitoring viewer, OS Login project get); none are added.
 - Resource names (service account, template, firewall rule) derive from `name`, so several bastions can share a project.
-- The upstream module creates its instance template with `google-beta`; configure both `google` and `google-beta` in the root module.
+- The upstream instance template submodule (terraform-google-modules/vm 13.x) creates the template with `google-beta` (`>= 5.36, < 8`); this module declares `google-beta` as `>= 6.0, < 8.0`. Configure both `google` and `google-beta` in the root module (same project and credentials).
 
 ## Usage
 
@@ -52,7 +52,7 @@ The subnet must be in the region of `zone`; Private Google Access or a NAT is ne
 | ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | >= 6.0, < 8.0 |
-| <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | >= 6.0, < 7.0 |
+| <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | >= 6.0, < 8.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.5, < 4.0 |
 
 ## Providers
@@ -79,7 +79,7 @@ The subnet must be in the region of `zone`; Private Google Access or a NAT is ne
 | ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_context"></a> [context](#input\_context) | Deployment context used for naming, tagging and environment-dependent defaults. | <pre>object({<br/>    organization = string<br/>    environment  = string<br/>    application  = string<br/>    component    = optional(string)<br/>    owner        = string<br/>    cost_center  = string<br/>    extra_tags   = optional(map(string), {})<br/>  })</pre> | n/a | yes |
 | <a name="input_members"></a> [members](#input\_members) | IAM members allowed to reach the bastion through IAP and sign in with OS Login, each prefixed user:, group:, serviceAccount: or domain:. | `list(string)` | n/a | yes |
-| <a name="input_name"></a> [name](#input\_name) | Resource name. Lowercase letters, digits and hyphens. | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Instance name. Starts with a lowercase letter; lowercase letters, digits and hyphens; at most 22 characters so the derived service account id (<name>-bastion) stays within 30. | `string` | n/a | yes |
 | <a name="input_network"></a> [network](#input\_network) | Existing VPC network and subnet (names, in project\_id and in the region of zone) the bastion attaches to. | <pre>object({<br/>    name        = string<br/>    subnet_name = string<br/>  })</pre> | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Project that hosts the bastion VM and its network. | `string` | n/a | yes |
 | <a name="input_zone"></a> [zone](#input\_zone) | Zone for the bastion VM, for example us-central1-a. The region is derived from it. | `string` | n/a | yes |
@@ -93,6 +93,7 @@ The subnet must be in the region of `zone`; Private Google Access or a NAT is ne
 | ---- | ----------- |
 | <a name="output_external_ip_enabled"></a> [external\_ip\_enabled](#output\_external\_ip\_enabled) | Whether the bastion has an external IP. Always false; null when create is false. |
 | <a name="output_id"></a> [id](#output\_id) | Instance ID (projects/<project>/zones/<zone>/instances/<name>). Null when create is false. |
+| <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | Internal IP address of the bastion. Null when create is false. |
 | <a name="output_labels"></a> [labels](#output\_labels) | Labels applied to the bastion, with context.extra\_tags merged in. Null when create is false. |
 | <a name="output_members"></a> [members](#output\_members) | IAM members granted IAP tunnel and OS Login access. Null when create is false. |
 | <a name="output_name"></a> [name](#output\_name) | Instance host name. Null when create is false. |
