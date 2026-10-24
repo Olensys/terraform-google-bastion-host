@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/Olensys/terraform-google-bastion-host/compare/v1.1.1...v1.1.2) (2026-10-24)
+
+
+### Bug Fixes
+
+* **examples:** unique application slug so concurrent integration runs do not collide ([#2](https://github.com/Olensys/terraform-google-bastion-host/issues/2)) ([6a2919f](https://github.com/Olensys/terraform-google-bastion-host/commit/6a2919f574a2d2419be8a5bc7bc7ac1cb689bb1f))
+
 ## [1.1.1](https://github.com/Olensys/terraform-google-bastion-host/compare/v1.1.0...v1.1.1) (2026-10-24)
 
 
