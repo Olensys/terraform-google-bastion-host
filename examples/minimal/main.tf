@@ -36,13 +36,13 @@ variable "member" {
 module "this" {
   source = "../../"
 
-  name       = "example"
+  name       = "olensys-test-bastion"
   project_id = var.project_id
   zone       = "us-central1-a"
   context = {
     organization = "olensys"
     environment  = "test"
-    application  = "example"
+    application  = "bastion"
     owner        = "platform"
     cost_center  = "eng"
   }
