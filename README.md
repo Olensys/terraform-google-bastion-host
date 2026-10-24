@@ -16,6 +16,16 @@ Bastion VM with no external IP, IAP-only SSH, OS Login and shielded VM, for name
 ## Usage
 
 ```hcl
+variable "context" {
+  default = {
+    organization = "olensys"
+    environment  = "dev"
+    application  = "example"
+    owner        = "platform"
+    cost_center  = "eng"
+  }
+}
+
 module "naming" {
   source  = "git::https://github.com/Olensys/terraform-null-naming.git?ref=v1.0.1"
   context = var.context
@@ -27,13 +37,7 @@ module "this" {
   name       = module.naming.name
   project_id = "example-project"
   zone       = "us-central1-a"
-  context = {
-    organization = "olensys"
-    environment  = "dev"
-    application  = "example"
-    owner        = "platform"
-    cost_center  = "eng"
-  }
+  context = var.context
 
   network = {
     name        = "example-net"
