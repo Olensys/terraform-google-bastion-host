@@ -1,7 +1,7 @@
 name: terraform-google-bastion-host
 cloud: google          # aws | google | common
 tier: capability          # primitive | capability | blueprint
-maturity: experimental    # experimental | stable | deprecated
+maturity: stable    # experimental | stable | deprecated
 description: Bastion VM with no external IP, IAP-only SSH, OS Login and shielded VM, for named members
 owners: [platform]
 upstream: "terraform-google-modules/bastion-host/google 9.0.0"
