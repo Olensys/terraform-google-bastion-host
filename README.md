@@ -11,14 +11,20 @@ Bastion VM with no external IP, IAP-only SSH, OS Login and shielded VM, for name
 - Service account roles are upstream's defaults (log writer, metric writer, monitoring viewer, OS Login project get); none are added.
 - Resource names (service account, template, firewall rule) derive from `name`, so several bastions can share a project.
 - The upstream instance template submodule (terraform-google-modules/vm 13.x) creates the template with `google-beta` (`>= 5.36, < 8`); this module declares `google-beta` as `>= 6.0, < 8.0`. Configure both `google` and `google-beta` in the root module (same project and credentials).
+- `context.extra_tags` keys and values are normalised to valid GCP label syntax (lowercase, `[^a-z0-9_-]` → `-`, 63 chars); `labels` are applied verbatim and win.
 
 ## Usage
 
 ```hcl
-module "this" {
-  source = "git::https://github.com/Olensys/terraform-google-bastion-host.git?ref=v1.0.0"
+module "naming" {
+  source  = "git::https://github.com/Olensys/terraform-null-naming.git?ref=v1.0.1"
+  context = var.context
+}
 
-  name       = "example"
+module "this" {
+  source = "git::https://github.com/Olensys/terraform-google-bastion-host.git?ref=v1.1.0"
+
+  name       = module.naming.name
   project_id = "example-project"
   zone       = "us-central1-a"
   context = {
@@ -34,6 +40,8 @@ module "this" {
     subnet_name = "example-subnet"
   }
   members = ["user:alice@example.com"]
+
+  labels = module.naming.labels
 }
 ```
 
