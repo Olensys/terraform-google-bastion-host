@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/Olensys/terraform-google-bastion-host/compare/v1.1.0...v1.1.1) (2026-10-24)
+
+
+### Bug Fixes
+
+* run integration on change and weekly instead of nightly ([548210c](https://github.com/Olensys/terraform-google-bastion-host/commit/548210c1539c32a40ad3c97f30a0e9d945530c22))
+
 ## 1.1.0
 
 ### Fixes
